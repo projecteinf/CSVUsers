@@ -1,5 +1,3 @@
-# README EN RELACIO A SNMP
-
 # Introducció
 
 Es tracta, mitjançant l'ús de SNMP i de contenidors Dockers, de poder executar diversos serveis web associats a diferents contenidors i poder monitoritzar-los mitjançant SNMP.
@@ -69,15 +67,12 @@ Per a executar el nostre script de Python cal executar la següent comanda:
     python3 TESTS/get.py
 ```
 
-## Verificació funcionament - bash
-
-```bash
-    snmpwalk -v 2c -c public 172.17.0.2 1.3.6.1.2.1.1.1 # Comprovem que el contenidor està en funcionament
-    snmpwalk -v2c -c public 172.17.0.2 # Veure tots els OIDs disponibles
-```
-
 ## Comandes from history
 ```bash
+    wget http://ftp.us.debian.org/debian/pool/non-free/s/snmp-mibs-downloader/snmp-mibs-downloader_1.2_all.deb
+    sudo dpkg -i snmp-mibs-downloader_1.2_all.deb
+    sudo apt install -f # Verificar que s'afegeix espai
+
     docker stop $(docker ps -a -q) # Parem tots els contenidors que s'estiguin executant
     docker rm $(docker ps -a -q) # Eliminem tots els contenidors
     docker image rm $(docker image ls -q) --force # Eliminem totes les imatges
@@ -87,6 +82,13 @@ Per a executar el nostre script de Python cal executar la següent comanda:
     docker run -d --name webcontainer -p 80:80 web # Creem i executem un contenidor a partir de la imatge web
     docker inspect webcontainer | grep '"IPAddress":' | cut -d ":" -f2 | cut -d "," -f1 | head -n1  # Adreça IP contenidor web
     python3 TESTS/get.py # Executem el script de Python per comprovar que el contenidor està en funcionament
+```
+
+## Verificació funcionament - bash
+
+```bash
+    snmpwalk -v 2c -c public 172.17.0.2 1.3.6.1.2.1.1.1 # Comprovem que el contenidor està en funcionament
+    snmpwalk -v2c -c public 172.17.0.2 # Veure tots els OIDs disponibles
 ```
  
 # Publicar imatge a Docker
